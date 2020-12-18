@@ -5,6 +5,8 @@ from typing import Dict
 
 import dotfiles.core.logging
 import dotfiles.subcommands.list
+import dotfiles.subcommands.sync
+import dotfiles.subcommands.update
 
 logger = logging.getLogger("dotfiles")
 
@@ -15,6 +17,8 @@ def main():
 
     sub_parsers = parser.add_subparsers(dest='command')
     dotfiles.subcommands.list.add_sub_parser(sub_parsers)
+    dotfiles.subcommands.sync.add_sub_parser(sub_parsers)
+    dotfiles.subcommands.update.add_sub_parser(sub_parsers)
 
     args = parser.parse_args()
 
@@ -23,6 +27,10 @@ def main():
 
     if args.command == dotfiles.subcommands.list.COMMAND:
         dotfiles.subcommands.list.run(config, args)
+    elif args.command == dotfiles.subcommands.sync.COMMAND:
+        dotfiles.subcommands.sync.run(config, args)
+    elif args.command == dotfiles.subcommands.update.COMMAND:
+        dotfiles.subcommands.update.run(config, args)
     else:
         raise ValueError('Unknown Command')
 
