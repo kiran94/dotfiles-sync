@@ -1,0 +1,15 @@
+{
+    "config": 
+    {
+        ".bashrc": 
+        {
+            "Linux": "~/.bashrc",
+            "Windows": "~/.bashrc"
+        },
+        ".vimrc":
+        {
+            "Linux": "~/.vimrc",
+            "Windows": "~/.vimrc"
+        }
+    }
+}
