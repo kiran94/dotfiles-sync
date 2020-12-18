@@ -1,9 +1,11 @@
 import os
+import logging
 from enum import Enum
 from typing import Dict, Iterable
-import logging
 
-from dotfiles import OPERATING_SYSTEM
+from rich.progress import track
+
+from dotfiles import OPERATING_SYSTEM, PROGRESS_BAR_THRESHOLD
 
 logger = logging.getLogger(__name__)
 
@@ -47,9 +49,11 @@ def match(config: Dict, configuration_source_file_dir: str) -> Iterable[Configur
     source_files = os.listdir(configuations_directory)
     source_files = {s:os.path.join(configuations_directory, s) for s in source_files}
 
-    for config_key in configuations.keys():
+    hide_progress = not (len(configuations) > PROGRESS_BAR_THRESHOLD)
+    
+    for config_key in track(configuations.keys(), description='Processing...', disable=hide_progress):
         status = ConfigurationMatchStatus.SYNCHRONIZABLE
-
+        
         '''
         The Configuration file did not have a value for this config_key for this operating system
         '''
