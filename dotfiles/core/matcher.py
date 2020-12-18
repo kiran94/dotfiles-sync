@@ -26,8 +26,8 @@ class ConfigurationMatch:
     '''
     def __init__(self, key: str, source: str, target: str, status: ConfigurationMatchStatus) -> None:
         self.key: str = key
-        self.source: str = source
-        self.target: str = target
+        self.source: str = os.path.expanduser(source)
+        self.target: str = os.path.expanduser(target)
         self.status: ConfigurationMatchStatus = status
 
         if not source:
@@ -39,7 +39,7 @@ class ConfigurationMatch:
         return f'{self.key}: {self.source} => {self.target} ({self.status} | {self.source_type})'
 
 
-def match(config: Dict, configuration_source_file_dir: str) -> Iterable[ConfigurationMatch]:
+def match(config: Dict, configuration_source_file_dir: str, hide_progress: bool = False) -> Iterable[ConfigurationMatch]:
     '''
     Matches the Configuration File with the Source Files vs the Files on the System
     '''
@@ -49,7 +49,7 @@ def match(config: Dict, configuration_source_file_dir: str) -> Iterable[Configur
     source_files = os.listdir(configuations_directory)
     source_files = {s:os.path.join(configuations_directory, s) for s in source_files}
 
-    hide_progress = not (len(configuations) > PROGRESS_BAR_THRESHOLD)
+    hide_progress = not (len(configuations) > PROGRESS_BAR_THRESHOLD) or hide_progress
     
     for config_key in track(configuations.keys(), description='Processing...', disable=hide_progress):
         status = ConfigurationMatchStatus.SYNCHRONIZABLE
@@ -72,7 +72,7 @@ def match(config: Dict, configuration_source_file_dir: str) -> Iterable[Configur
         except KeyError:
             logger.warning('%s was found in config but does not exist in source %s', config_key, configuration_source_file_dir)
             status = ConfigurationMatchStatus.MISSING_SOURCE_FILE
-            source_configuation = None
+            source_configuation = os.path.join(configuations_directory, config_key)
 
         c = ConfigurationMatch(config_key, source_configuation, target_configuration, status)
         yield c
