@@ -2,10 +2,11 @@
 from argparse import ArgumentParser, Namespace
 import logging
 from typing import Dict
-from shutil import copy, copyfile
+from shutil import copyfile
 
 from rich.progress import track
 
+from dotfiles import FOLLOW_SYMLINKS
 from dotfiles.core.matcher import match, ConfigurationFileType
 
 COMMAND = "update"
@@ -24,7 +25,7 @@ def run(config: Dict, args: Namespace):
 
         if config.source_type == ConfigurationFileType.FILE:
             logger.info('Copying %s => %s', config.target, config.source)
-            copyfile(config.target, config.source)
+            copyfile(config.target, config.source, follow_symlinks=FOLLOW_SYMLINKS)
 
         elif config.source == ConfigurationFileType.DIRECTORY:
             pass
