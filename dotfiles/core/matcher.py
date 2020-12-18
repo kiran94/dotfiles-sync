@@ -30,10 +30,23 @@ class ConfigurationMatch:
         self.target: str = os.path.expanduser(target)
         self.status: ConfigurationMatchStatus = status
 
-        if not source:
+        if not self.source:
             self.source_type = ConfigurationFileType.UNKNOWN
+
+        elif os.path.exists(self.source) and os.path.isdir(self.source):
+            self.source_type = ConfigurationFileType.DIRECTORY
+
+        elif os.path.exists(self.source) and os.path.isfile(self.source):
+            self.source_type = ConfigurationFileType.FILE
+        
+        elif os.path.exists(self.target) and os.path.isdir(self.target):
+            self.source_type = ConfigurationFileType.DIRECTORY
+
+        elif os.path.exists(self.target) and os.path.isfile(self.target):
+            self.source_type = ConfigurationFileType.FILE
+
         else:
-            self.source_type = ConfigurationFileType.DIRECTORY if os.path.isdir(source) else ConfigurationFileType.FILE
+            self.source_type = ConfigurationFileType.UNKNOWN
 
     def __str__(self) -> str:
         return f'{self.key}: {self.source} => {self.target} ({self.status} | {self.source_type})'
