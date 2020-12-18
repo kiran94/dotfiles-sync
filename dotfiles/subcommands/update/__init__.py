@@ -3,6 +3,7 @@ from argparse import ArgumentParser, Namespace
 import logging
 from typing import Dict
 from shutil import copyfile
+from distutils.dir_util import copy_tree
 
 from rich.progress import track
 
@@ -24,8 +25,9 @@ def run(config: Dict, args: Namespace):
     for config in track(matches, description=f'Updating Configuration Directory: {config_dir}'):
 
         if config.source_type == ConfigurationFileType.FILE:
-            logger.info('Copying %s => %s', config.target, config.source)
+            logger.info('Copying File %s => %s', config.target, config.source)
             copyfile(config.target, config.source, follow_symlinks=FOLLOW_SYMLINKS)
 
-        elif config.source == ConfigurationFileType.DIRECTORY:
-            pass
+        elif config.source_type == ConfigurationFileType.DIRECTORY:
+            logger.info('Copying Directory %s => %s', config.target, config.source)
+            copy_tree(config.target, config.source)
