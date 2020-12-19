@@ -5,7 +5,7 @@ with open('requirements.txt', 'r') as f:
     requirements = requirements.split('\n')
 
 setup(
-    name='dotfiles',
+    name='dotfiles-sync',
     version='0.0.1',
     packages=['dotfiles'],
     install_requires=requirements,
