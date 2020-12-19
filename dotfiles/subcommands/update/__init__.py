@@ -15,8 +15,10 @@ COMMAND = "update"
 
 logger = logging.getLogger(__name__)
 
+
 def add_sub_parser(parser: ArgumentParser):
     _ = parser.add_parser(COMMAND)
+
 
 def run(config: Dict, args: Namespace):
 
