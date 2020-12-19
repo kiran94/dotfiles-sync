@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open('requirements.txt', 'r') as f:
     requirements = f.read()
@@ -6,8 +6,8 @@ with open('requirements.txt', 'r') as f:
 
 setup(
     name='dotfiles-sync',
-    version='0.0.1',
-    packages=['dotfiles'],
+    version='0.0.2',
+    packages=find_packages(),
     install_requires=requirements,
     entry_points={
         'console_scripts': [
