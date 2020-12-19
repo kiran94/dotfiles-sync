@@ -10,6 +10,7 @@ import dotfiles.subcommands.update
 
 logger = logging.getLogger("dotfiles")
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--config', default='config.json', help='dotfiles configuration. Points to target locations.')
@@ -36,6 +37,6 @@ def main():
     else:
         raise ValueError('Unknown Command')
 
+
 if __name__ == "__main__":
     main()
-    

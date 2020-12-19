@@ -7,6 +7,7 @@ console = Console()
 
 logger = logging.getLogger(__name__)
 
+
 def call(func: Callable, dry: bool, interactive: bool, *args, **kwargs):
     if dry:
         logger.warning('Skipping as dry run option was set')
