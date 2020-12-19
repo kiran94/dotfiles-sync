@@ -1,0 +1,30 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "dotfiles list",
+            "type": "python",
+            "request": "launch",
+            "module": "dotfiles",
+            "args": [
+                "--config", "examples/config.json", 
+                "--config_dir", "examples/configs", 
+                "list"
+            ]
+        },
+        {
+            "name": "dotfiles update",
+            "type": "python",
+            "request": "launch",
+            "module": "dotfiles",
+            "args": [
+                "--config", "examples/config.json", 
+                "--config_dir", "examples/configs", 
+                "update"
+            ]
+        }
+    ]
+}
