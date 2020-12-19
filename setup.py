@@ -9,7 +9,7 @@ with open('requirements.txt', 'r') as f:
 
 setup(
     name='dotfiles-sync',
-    version='0.0.3',
+    version='0.0.5',
     packages=find_packages(),
     install_requires=requirements,
     long_description=long_description,
