@@ -15,6 +15,7 @@ def main():
     parser.add_argument('-c', '--config', default='config.json', help='dotfiles configuration. Points to target locations.')
     parser.add_argument('-w', '--config_dir', default='.', help='Location of the configuration files to sync')
     parser.add_argument('-d', '--dry', action='store_true', default=False)
+    parser.add_argument('-i', '--interactive', action='store_true', default=False)
 
     sub_parsers = parser.add_subparsers(dest='command')
     dotfiles.subcommands.list.add_sub_parser(sub_parsers)
