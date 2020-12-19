@@ -7,6 +7,7 @@ from distutils.dir_util import copy_tree
 
 from rich.progress import track
 
+from dotfiles.core.dry import call
 from dotfiles.core.matcher import match, ConfigurationFileType
 
 COMMAND = "sync"
@@ -25,8 +26,8 @@ def run(config: Dict, args: Namespace):
 
         if config.source_type == ConfigurationFileType.FILE:
             logger.info('Copying File %s => %s', config.source, config.target)
-            copyfile(config.source, config.target)
+            call(copyfile, args.dry, config.source, config.target)
 
         elif config.source_type == ConfigurationFileType.DIRECTORY:
             logger.info('Copying Directory %s => %s', config.source, config.target)
-            copy_tree(config.source, config.target)
+            call(copy_tree, args.dry, config.source, config.target)
