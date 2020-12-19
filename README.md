@@ -17,6 +17,13 @@ I needed a solution which would allowed me to easily automate synchronising my c
 
 ## Getting Started
 
+This package is deployed to [pypi](https://pypi.org/project/dotfiles-sync/):
+
+```sh
+python -m pip install dotfiles-sync
+```
+
+
 The `--help` will always show the most up to date options:
 
 ```sh
