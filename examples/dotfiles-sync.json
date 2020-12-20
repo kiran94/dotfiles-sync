@@ -3,17 +3,17 @@
     {
         ".bashrc": 
         {
-            "Linux": "~/.bashrc",
-            "Windows": "~/.bashrc"
+            "linux": "~/.bashrc",
+            "windows": "~/.bashrc"
         },
         ".vimrc":
         {
-            "Linux": "~/.vimrc",
-            "Windows": "~/.vimrc"
+            "linux": "~/.vimrc",
+            "windows": "~/.vimrc"
         },
         "pgcli":
         {
-            "Linux": "~/.config/pgcli"
+            "linux": "~/.config/pgcli"
         }
     }
 }
