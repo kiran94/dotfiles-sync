@@ -64,8 +64,22 @@ def match(config: Dict, configuration_source_file_dir: str, hide_progress: bool 
     configuations_directory = configuration_source_file_dir
 
     source_files = os.listdir(configuations_directory)
-    source_files = {s: os.path.join(configuations_directory, s)
-                    for s in source_files}
+    source_file_paths = set()
+
+    '''
+    Find all the configuration files in the configuations_directory
+    so we can match them with keys in config.
+
+    Skip .git files
+    '''
+    for dir_, _, files in os.walk(configuations_directory):
+        for file_name in files:
+            rel_dir = os.path.relpath(dir_, configuations_directory)
+            rel_file = os.path.join(rel_dir, file_name)
+            if not rel_dir.startswith('.git'):
+                source_file_paths.add(rel_file)
+
+    source_files = {s: os.path.join(configuations_directory, s) for s in source_file_paths}
 
     hide_progress = not (len(configuations) >
                          PROGRESS_BAR_THRESHOLD) or hide_progress
