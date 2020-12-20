@@ -37,6 +37,10 @@ def run(config: Dict, args: Namespace):
             logger.warning('%s is disabled. Skipping.', config.key)
             continue
 
+        if args.filter and (config.key not in args.filter):
+            logger.debug('%s is not in explicit filter list %s. Skipping.', config.key, args.filter)
+            continue
+
         if config.source_type == ConfigurationFileType.FILE:
             logger.info('Copying File %s => %s', config.target, config.source)
 
