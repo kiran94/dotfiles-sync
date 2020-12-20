@@ -30,8 +30,8 @@ class ConfigurationMatch:
 
     def __init__(self, key: str, source: str, target: str, status: ConfigurationMatchStatus, disabled: bool) -> None:
         self.key: str = key
-        self.source: str = os.path.expanduser(source)
-        self.target: str = os.path.expanduser(target)
+        self.source: str = source and os.path.expanduser(source)
+        self.target: str = target and os.path.expanduser(target)
         self.status: ConfigurationMatchStatus = status
         self.disabled = disabled
 
