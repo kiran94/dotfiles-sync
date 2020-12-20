@@ -33,6 +33,10 @@ def run(config: Dict, args: Namespace):
             logger.warning('%s had status %s. Skipping.', config.key, config.status)
             continue
 
+        if config.disabled:
+            logger.warning('%s is disabled. Skipping.', config.key)
+            continue
+
         if config.source_type == ConfigurationFileType.FILE:
             logger.info('Copying File %s => %s', config.source, config.target)
             directory = os.path.dirname(config.target)
