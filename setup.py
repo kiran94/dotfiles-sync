@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+from dotfiles import __version__
 
 with open("README.md", "r") as desc:
     long_description = desc.read()
@@ -9,7 +10,7 @@ with open('requirements.txt', 'r') as f:
 
 setup(
     name='dotfiles-sync',
-    version='0.0.7',
+    version=__version__,
     packages=find_packages(),
     install_requires=requirements,
     long_description=long_description,

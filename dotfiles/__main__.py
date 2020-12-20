@@ -3,6 +3,7 @@ import logging
 import json
 from typing import Dict
 
+from dotfiles import __version__
 import dotfiles.core.logging
 import dotfiles.subcommands.list
 import dotfiles.subcommands.sync
@@ -17,6 +18,7 @@ def main():
     parser.add_argument('-w', '--config_dir', default='.', help='Location of the configuration files to sync')
     parser.add_argument('-d', '--dry', action='store_true', default=False, help='Only read and show me what you would have done')
     parser.add_argument('-i', '--interactive', action='store_true', default=False, help='Before doing a write, ask for confirmation')
+    parser.add_argument('--version', action='version', version=__version__)
 
     sub_parsers = parser.add_subparsers(dest='command')
     dotfiles.subcommands.list.add_sub_parser(sub_parsers)
