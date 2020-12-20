@@ -53,8 +53,8 @@ An example of a configuration file is:
     {
         ".bashrc": 
         {
-            "Linux": "~/.bashrc",
-            "Windows": "~/.bashrc"
+            "linux": "~/.bashrc",
+            "windows": "~/.bashrc"
         }
     }
 }
@@ -62,7 +62,7 @@ An example of a configuration file is:
 
 Where `.bashrc` is the file in the *configuration directory* we are interested in tracking. The *configuration directory* is the directory where the central authrority of that file lives (typically a git repository which contains all your configuration files). This key could also be directory e.g `bash/.bashrc` if you wanted to keep all your bash related configuration files in organised into a `bash` folder.
 
-Each key contains paths to operating system specific path the file should be syncronised into. The operating systems supported here are the same as the ones that come in [platform.system](https://docs.python.org/3/library/platform.html#platform.system). Paths are also expanded using [os.path.expanduser](https://docs.python.org/3/library/os.path.html#os.path.expanduser) which means special symbols like `~` will be expanded in both Window and Linux.
+Each key contains paths to operating system specific path the file should be syncronised into. The operating systems supported here are the same as the ones that come in [platform.system](https://docs.python.org/3/library/platform.html#platform.system) but lowercased. Paths are also expanded using [os.path.expanduser](https://docs.python.org/3/library/os.path.html#os.path.expanduser) which means special symbols like `~` will be expanded in both Window and Linux.
 
 ### `list`
 
