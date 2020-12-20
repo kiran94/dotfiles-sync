@@ -9,9 +9,10 @@ from distutils.dir_util import copy_tree
 from rich.progress import track
 
 from dotfiles.core.dry import call
-from dotfiles.core.matcher import match, ConfigurationFileType
+from dotfiles.core.matcher import ConfigurationMatchStatus, match, ConfigurationFileType
 
 COMMAND = "sync"
+ALLOWED_MATCH_STATUSES = [ConfigurationMatchStatus.SYNCHRONIZABLE]
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +28,10 @@ def run(config: Dict, args: Namespace):
     hide_progress = args.dry or args.interactive
 
     for config in track(matches, description='Syncing Configuration...', disable=hide_progress):
+
+        if config.status not in ALLOWED_MATCH_STATUSES:
+            logger.warning('%s had status %s. Skipping.', config.key, config.status)
+            continue
 
         if config.source_type == ConfigurationFileType.FILE:
             logger.info('Copying File %s => %s', config.source, config.target)
