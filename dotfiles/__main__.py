@@ -15,7 +15,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--config', default='dotfiles-sync.json', help='dotfiles configuration. Points to target locations.')
     parser.add_argument('-w', '--config_dir', default='.', help='Location of the configuration files to sync')
-    parser.add_argument('-d', '--dry', action='store_true', default=False, help='Never actually write any files, only read and show me what you would have done')
+    parser.add_argument('-d', '--dry', action='store_true', default=False, help='Only read and show me what you would have done')
     parser.add_argument('-i', '--interactive', action='store_true', default=False, help='Before doing a write, ask for confirmation')
 
     sub_parsers = parser.add_subparsers(dest='command')
