@@ -1,3 +1,4 @@
+import os
 import argparse
 import logging
 import json
@@ -14,8 +15,8 @@ logger = logging.getLogger("dotfiles")
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--config', default='dotfiles-sync.json', help='dotfiles configuration. Points to target locations.')
-    parser.add_argument('-w', '--config_dir', default='.', help='Location of the configuration files to sync')
+    parser.add_argument('-c', '--config', default=os.environ.get('DOTFILESSYNC_CONFIG', 'dotfiles-sync.json'), help='dotfiles configuration. Points to target locations.')
+    parser.add_argument('-w', '--config_dir', default=os.environ.get('DOTFILESSYNC_DIR', '.'), help='Location of the configuration files to sync')
     parser.add_argument('-d', '--dry', action='store_true', default=False, help='Only read and show me what you would have done')
     parser.add_argument('-i', '--interactive', action='store_true', default=False, help='Before doing a write, ask for confirmation')
     parser.add_argument('-f', '--filter', nargs='+', default=[], help='keys(s) of the configuration to apply. If not set then apply them all')
