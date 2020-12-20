@@ -1,6 +1,7 @@
 
 from argparse import ArgumentParser, Namespace
 import logging
+import os
 from typing import Dict
 from shutil import copyfile
 from distutils.dir_util import copy_tree
@@ -29,6 +30,8 @@ def run(config: Dict, args: Namespace):
 
         if config.source_type == ConfigurationFileType.FILE:
             logger.info('Copying File %s => %s', config.source, config.target)
+            directory = os.path.dirname(config.target)
+            call(os.makedirs, args.dry, args.interactive, directory, exist_ok=True)
             call(copyfile, args.dry, args.interactive, config.source, config.target)
 
         elif config.source_type == ConfigurationFileType.DIRECTORY:
