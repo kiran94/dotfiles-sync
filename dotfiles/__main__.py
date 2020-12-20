@@ -38,7 +38,8 @@ def main():
     elif args.command == dotfiles.subcommands.update.COMMAND:
         dotfiles.subcommands.update.run(config, args)
     else:
-        raise ValueError('Unknown Command')
+        logger.warning('Unknown Command')
+        parser.print_usage()
 
 
 if __name__ == "__main__":

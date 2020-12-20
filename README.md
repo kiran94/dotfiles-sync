@@ -31,7 +31,7 @@ The `--help` will always show the most up to date options:
 
 ```sh
 ❯ dotfiles --help
-usage: dotfiles [-h] [-c CONFIG] [-w CONFIG_DIR] [-d] [-i] {list,sync,update} ...
+usage: dotfiles [-h] [-c CONFIG] [-w CONFIG_DIR] [-d] [-i] [-f FILTER [FILTER ...]] [--version] {list,sync,update} ...
 
 positional arguments:
   {list,sync,update}
@@ -42,8 +42,11 @@ optional arguments:
                         dotfiles configuration. Points to target locations.
   -w CONFIG_DIR, --config_dir CONFIG_DIR
                         Location of the configuration files to sync
-  -d, --dry             Never actually write any files, only read and show me what you would have done
+  -d, --dry             Only read and show me what you would have done
   -i, --interactive     Before doing a write, ask for confirmation
+  -f FILTER [FILTER ...], --filter FILTER [FILTER ...]
+                        keys(s) of the configuration to apply. If not set then apply them all
+  --version             show program's version number and exit
 ```
 
 This application relies on the fact that you store your configuration in source control and that you define a configuration file which declares your configurations you want to track along with paths per operating system. 
@@ -63,9 +66,11 @@ An example of a configuration file is:
 }
 ```
 
-Where `.bashrc` is the file in the *configuration directory* we are interested in tracking. The *configuration directory* is the directory where the central authrority of that file lives (typically a git repository which contains all your configuration files). This key could also be directory e.g `bash/.bashrc` if you wanted to keep all your bash related configuration files in organised into a `bash` folder.
+Typically named `dotfiles-sync.json`, this file defines each of the configurations we are interested in along with the locations where they should live per operating system. In this example we have a single entry `.bashrc` which states that we have a file in the root of the *configuration directory* with the same name. The *configuration directory* is the directory where the central authority of that files live (typically a git repository which contains all your configuration files).
 
-Each key contains paths to operating system specific path the file should be syncronised into. The operating systems supported here are the same as the ones that come in [platform.system](https://docs.python.org/3/library/platform.html#platform.system) but lowercased. Paths are also expanded using [os.path.expanduser](https://docs.python.org/3/library/os.path.html#os.path.expanduser) which means special symbols like `~` will be expanded in both Window and Linux.
+This entry can also be a folder or file within a subdirectory (e.g `bash/.bashrc`) for if you wanted to keep all your bash related configuration files organised into a `bash` folder in your repo.
+
+Each entry contains paths to operating system specific path the file should be syncronised into. The operating systems supported here are the same as the ones that come in [platform.system](https://docs.python.org/3/library/platform.html#platform.system) but lowercased. Paths are also expanded using [os.path.expanduser](https://docs.python.org/3/library/os.path.html#os.path.expanduser) which means special symbols like `~` will be expanded in both Window and Linux.
 
 **Note if you have a path which can be applied across platforms, then you can define a single config `"cross": "~/.bashrc"`.**
 
@@ -74,7 +79,7 @@ Each key contains paths to operating system specific path the file should be syn
 Once you have a dotfiles configuration and configuration directory you can run `list`:
 
 ```sh
-❯ dotfiles --config examples/config.json --config_dir examples/configs list
+❯ dotfiles --config examples/dotfiles-sync.json --config_dir examples/configs list
 [18:58:55] INFO     Listing Configurations
            INFO     .bashrc: examples/configs/.bashrc => /home/kiran/.bashrc (ConfigurationMatchStatus.SYNCHRONIZABLE | ConfigurationFileType.FILE)
            INFO     .vimrc: examples/configs/.vimrc => /home/kiran/.vimrc (ConfigurationMatchStatus.SYNCHRONIZABLE | ConfigurationFileType.FILE)
@@ -88,7 +93,7 @@ Once you have a dotfiles configuration and configuration directory you can run `
 If we are happy, then we can do a `sync`. This will take the files in your configuration directory and allow them to the machine.
 
 ```sh
-❯ dotfiles --config examples/config.json --config_dir examples/configs sync
+❯ dotfiles --config examples/dotfiles-sync.json --config_dir examples/configs sync
 
 [18:59:41] INFO     Copying File examples/configs/.bashrc => /home/kiran/.bashrc
            INFO     Copying File examples/configs/.vimrc => /home/kiran/.vimrc
@@ -101,7 +106,7 @@ Syncing Configuration... ━━━━━━━━━━━━━━━━━━�
 You may want to also do the reverse and update your configuration directory with the files on your current machine. This can be done using `update`:
 
 ```sh
-❯ dotfiles --config examples/config.json --config_dir examples/configs update
+❯ dotfiles --config examples/dotfiles-sync.json --config_dir examples/configs update
 
 [19:01:47] INFO     Copying File /home/kiran/.bashrc => examples/configs/.bashrc
            INFO     Copying File /home/kiran/.vimrc => examples/configs/.vimrc

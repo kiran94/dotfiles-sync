@@ -3,17 +3,16 @@
     {
         ".bashrc": 
         {
-            "linux": "~/.bashrc",
-            "windows": "~/.bashrc"
+            "cross": "~/.bashrc"
         },
         ".vimrc":
         {
             "linux": "~/.vimrc",
             "windows": "~/.vimrc"
         },
-        "pgcli":
+        "windowsterminal/settings.json":
         {
-            "linux": "~/.config/pgcli"
+             "windows": "~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json"
         }
     }
 }
