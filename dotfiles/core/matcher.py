@@ -62,27 +62,7 @@ def match(config: Dict, configuration_source_file_dir: str, hide_progress: bool 
     '''
     configuations = config['config']
     configuations_directory = configuration_source_file_dir
-
-    source_files = os.listdir(configuations_directory)
-    source_file_paths = set()
-
-    '''
-    Find all the configuration files in the configuations_directory
-    so we can match them with keys in config.
-
-    Skip .git files
-    '''
-    for dir_, _, files in os.walk(configuations_directory):
-        for file_name in files:
-            rel_dir = os.path.relpath(dir_, configuations_directory)
-            rel_file = os.path.join(rel_dir, file_name)
-            if not rel_dir.startswith('.git'):
-                source_file_paths.add(rel_file)
-
-    source_files = {s: os.path.join(configuations_directory, s) for s in source_file_paths}
-
-    hide_progress = not (len(configuations) >
-                         PROGRESS_BAR_THRESHOLD) or hide_progress
+    hide_progress = not (len(configuations) > PROGRESS_BAR_THRESHOLD) or hide_progress
 
     for config_key in track(configuations.keys(), description='Processing...', disable=hide_progress):
         status = ConfigurationMatchStatus.SYNCHRONIZABLE
@@ -93,23 +73,17 @@ def match(config: Dict, configuration_source_file_dir: str, hide_progress: bool 
         try:
             target_configuration = configuations[config_key][OPERATING_SYSTEM]
         except KeyError:
-            logger.warning('%s did not have a configuration for %s',
-                           config_key, OPERATING_SYSTEM)
+            logger.warning('%s did not have a configuration for %s', config_key, OPERATING_SYSTEM)
             status = ConfigurationMatchStatus.MISSING_OPERATING_SYSTEM_CONFIG
             target_configuration = None
 
         '''
         The source files did not exist for this key in the configuration
         '''
-        try:
-            source_configuation = source_files[config_key]
-        except KeyError:
-            logger.warning('%s was found in config but does not exist in source %s',
-                           config_key, configuration_source_file_dir)
+        source_configuation = os.path.join(configuations_directory, config_key)
+        if not os.path.exists(source_configuation):
+            logger.warning('%s was found in config but does not exist in source %s', config_key, configuations_directory)
             status = ConfigurationMatchStatus.MISSING_SOURCE_FILE
-            source_configuation = os.path.join(
-                configuations_directory, config_key)
 
-        c = ConfigurationMatch(
-            config_key, source_configuation, target_configuration, status)
+        c = ConfigurationMatch(config_key, source_configuation, target_configuration, status)
         yield c
