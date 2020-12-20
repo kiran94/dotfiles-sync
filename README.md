@@ -67,6 +67,8 @@ Where `.bashrc` is the file in the *configuration directory* we are interested i
 
 Each key contains paths to operating system specific path the file should be syncronised into. The operating systems supported here are the same as the ones that come in [platform.system](https://docs.python.org/3/library/platform.html#platform.system) but lowercased. Paths are also expanded using [os.path.expanduser](https://docs.python.org/3/library/os.path.html#os.path.expanduser) which means special symbols like `~` will be expanded in both Window and Linux.
 
+**Note if you have a path which can be applied across platforms, then you can define a single config `"cross": "~/.bashrc"`.**
+
 ### `list`
 
 Once you have a dotfiles configuration and configuration directory you can run `list`:
