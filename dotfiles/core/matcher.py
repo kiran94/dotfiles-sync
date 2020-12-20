@@ -28,11 +28,12 @@ class ConfigurationMatch:
     Represents a match between the source and target configurations and provides the status.
     '''
 
-    def __init__(self, key: str, source: str, target: str, status: ConfigurationMatchStatus) -> None:
+    def __init__(self, key: str, source: str, target: str, status: ConfigurationMatchStatus, disabled: bool) -> None:
         self.key: str = key
         self.source: str = os.path.expanduser(source)
         self.target: str = os.path.expanduser(target)
         self.status: ConfigurationMatchStatus = status
+        self.disabled = disabled
 
         if not self.source:
             self.source_type = ConfigurationFileType.UNKNOWN
@@ -53,6 +54,9 @@ class ConfigurationMatch:
             self.source_type = ConfigurationFileType.UNKNOWN
 
     def __str__(self) -> str:
+        if self.disabled:
+            return f'(DISABLED) {self.key}: {self.source} => {self.target} ({self.status} | {self.source_type})'
+
         return f'{self.key}: {self.source} => {self.target} ({self.status} | {self.source_type})'
 
 
@@ -85,5 +89,6 @@ def match(config: Dict, configuration_source_file_dir: str, hide_progress: bool 
             logger.warning('%s was found in config but does not exist in source %s', config_key, configuations_directory)
             status = ConfigurationMatchStatus.MISSING_SOURCE_FILE
 
-        c = ConfigurationMatch(config_key, source_configuation, target_configuration, status)
+        disabled = "disabled" in configuations[config_key] and configuations[config_key]["disabled"]
+        c = ConfigurationMatch(config_key, source_configuation, target_configuration, status, disabled)
         yield c
