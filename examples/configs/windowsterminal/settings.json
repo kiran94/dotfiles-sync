@@ -1,0 +1,33 @@
+// SAMPLE
+{
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "defaultProfile": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+
+    "profiles":
+    {
+        "defaults":
+        {
+            "fontFace": "Cascadia Code PL"
+        },
+        "list":
+        [
+            {
+                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+                "hidden": false,
+                "name": "🎉 Code",
+                "source": "Windows.Terminal.Wsl",
+                "colorScheme": "Campbell"
+            },
+            {
+                // Make changes here to the powershell.exe profile.
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "name": "Windows PowerShell",
+                "commandline": "powershell.exe",
+                "hidden": true
+            }
+        ]
+    },
+
+    "schemes": [],
+    "actions": []
+}
