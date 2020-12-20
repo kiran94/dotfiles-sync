@@ -18,5 +18,9 @@ def run(config: Dict, args: Namespace):
     logger.info("Listing Configurations")
 
     matches = match(config, args.config_dir)
-    for m in matches:
-        logger.info(m)
+    for current_match in matches:
+        if args.filter:
+            if current_match.key in args.filter:
+                logger.info(current_match)
+        else:
+            logger.info(current_match)

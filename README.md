@@ -10,6 +10,9 @@ dotfiles-sync is a command line application which helps manage configuration fil
     - [`list`](#list)
     - [`sync`](#sync)
     - [`update`](#update)
+    - [Other](#other)
+      - [Disabling Items](#disabling-items)
+      - [Filtering Items](#filtering-items)
 
 ## Motivation
 
@@ -102,4 +105,35 @@ You may want to also do the reverse and update your configuration directory with
            INFO     Copying File /home/kiran/.vimrc => examples/configs/.vimrc
            INFO     Copying Directory /home/kiran/.config/pgcli => examples/configs/pgcli
 Updating Configuration Directory: examples/configs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+```
+
+### Other
+
+#### Disabling Items
+
+Configuration Items can be disabled from being applied within the config file.
+
+```json
+{
+  "config":
+  {
+    "zsh/.p10k.zsh": 
+    {
+            "linux": "~/.p10k.zsh",
+            "disabled": true
+    }
+  }
+}
+```
+
+#### Filtering Items
+
+By default dotfiles will assume you want to run configuration on all items (unless explictely `disabled`). If you would like to only apply certain configurations then you can pass the keys of the configs you want to `--filter`:
+
+```sh
+❯ dotfiles -c $HOME/projects/dotfiles/dotfiles-sync.json  --filter "bash/.profile" "pgcli/config" -w $HOME/projects/dotfiles/ sync
+
+[14:54:59] INFO     Copying File /home/kiran/projects/dotfiles/bash/.profile => /home/kiran/.profile                                                                                                                
+           INFO     Copying File /home/kiran/projects/dotfiles/pgcli/config => /home/kiran/.config/pgcli/config                                                                                                     
+Syncing Configuration... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
 ```
