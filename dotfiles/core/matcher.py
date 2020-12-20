@@ -72,11 +72,15 @@ def match(config: Dict, configuration_source_file_dir: str, hide_progress: bool 
         status = ConfigurationMatchStatus.SYNCHRONIZABLE
 
         '''
-        The Configuration file did not have a value for this config_key for this operating system
+        If an operating system specific config is declared, then use this
+        else fall back to cross (if there)
+        else mark the config as not having an operating system (will not take part in sync/update)
         '''
-        try:
+        if OPERATING_SYSTEM in configuations[config_key]:
             target_configuration = configuations[config_key][OPERATING_SYSTEM]
-        except KeyError:
+        elif 'cross' in configuations[config_key]:
+            target_configuration = configuations[config_key]['cross']
+        else:
             logger.warning('%s did not have a configuration for %s', config_key, OPERATING_SYSTEM)
             status = ConfigurationMatchStatus.MISSING_OPERATING_SYSTEM_CONFIG
             target_configuration = None
