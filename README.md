@@ -13,6 +13,7 @@ dotfiles-sync is a command line application which helps manage configuration fil
     - [Other](#other)
       - [Disabling Items](#disabling-items)
       - [Filtering Items](#filtering-items)
+    - [Environment Variables](#environment-variables)
 
 ## Motivation
 
@@ -143,4 +144,19 @@ By default dotfiles will assume you want to run configuration on all items (unle
 [14:54:59] INFO     Copying File /home/kiran/projects/dotfiles/bash/.profile => /home/kiran/.profile                                                                                                                
            INFO     Copying File /home/kiran/projects/dotfiles/pgcli/config => /home/kiran/.config/pgcli/config                                                                                                     
 Syncing Configuration... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+```
+
+### Environment Variables
+
+It can be cumbersome to type out / remember where your dotfiles directory is on each machine. There are two environment variables to make life easier which you can set on a system level:
+
+```sh
+export DOTFILESSYNC_CONFIG= # path to the dotfiles-sync.json
+export DOTFILESSYNC_DIR= # path to your dotfiles which should be synced
+```
+
+This means makes invocation of this dotfiles-sync much cleaner:
+
+```sh
+dotfiles sync
 ```
