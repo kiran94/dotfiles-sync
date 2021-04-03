@@ -1,6 +1,6 @@
 # dotfiles-sync
 
-![Deploy](https://github.com/kiran94/dotfiles-sync/workflows/Deploy/badge.svg) ![pypi](https://img.shields.io/pypi/v/dotfiles-sync)
+![Deploy](https://github.com/kiran94/dotfiles-sync/workflows/Deploy/badge.svg) ![pypi](https://img.shields.io/pypi/v/dotfiles-sync?color=blue&style=flat-square)
 
 dotfiles-sync is a command line application which helps manage configuration files (typically dotfiles) across different machines and operating systems. 
 
